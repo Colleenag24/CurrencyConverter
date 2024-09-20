@@ -35,10 +35,8 @@ public class Converter {
 			System.out.println("US Dollar to Canadian Dollar");//print statement to make sure it works
 			break;
 		}
-	System.out.println("Do you want to convert another currency (Y/N) ?");
+	System.out.println("Do you want to convert another currency (Y/N) ?"); //Repeat or not?
 		again = reader.next();
-		
-		
 		}while (again.equals("Y"));
 		
 		
