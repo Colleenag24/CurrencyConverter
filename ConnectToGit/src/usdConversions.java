@@ -1,3 +1,4 @@
+
 public class usdConversions { //Conversions for the U.S Dollar
 	private double cadConversionRate = 1.36; //Amount of Canadian Dollars per U.S Dollar
 	private double gbpConversionRate = 0.76; //Amount of Pound per U.S Dollar
