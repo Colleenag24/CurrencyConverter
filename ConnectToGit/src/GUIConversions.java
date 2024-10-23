@@ -18,9 +18,7 @@ public class GUIConversions {
 	private JTextField textConversion;
 	private JTextField textConvertedAmt;
 	private JTextField textCurrencyNum;
-	private JLabel lblCurrencyNu;
 
-	private JLabel lblCurrencyNu;
 
 	/**
 	 * Launch the application.
@@ -50,18 +48,18 @@ public class GUIConversions {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.getContentPane().setBackground(new Color(132, 132, 255));
+		frame.getContentPane().setBackground(new Color(132, 132, 255)); //Background and layout
 		frame.setBounds(100, 100, 597, 433);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblConversions = new JLabel("Currency Conversions");
+		JLabel lblConversions = new JLabel("Currency Conversions"); //Title of GUI and formatting
 		lblConversions.setHorizontalAlignment(SwingConstants.CENTER);
 		lblConversions.setFont(new Font("Calibri", Font.BOLD, 22));
 		lblConversions.setBounds(0, 11, 581, 27);
 		frame.getContentPane().add(lblConversions);
 		
-		JTextArea areaConversions = new JTextArea();
+		JTextArea areaConversions = new JTextArea(); //Text area to set the options for the currency converter
 		areaConversions.setToolTipText("");
 		areaConversions.setBackground(new Color(132, 132, 255));
 		areaConversions.setFont(new Font("Calibri", Font.BOLD, 18));
@@ -70,43 +68,43 @@ public class GUIConversions {
 		areaConversions.setBounds(168, 35, 284, 74);
 		frame.getContentPane().add(areaConversions);
 		
-		JLabel lblStarting = new JLabel("Enter starting currency number:");
+		JLabel lblStarting = new JLabel("Enter starting currency number:");//label to instruct the user to enter the starting currency number
 		lblStarting.setFont(new Font("Calibri", Font.PLAIN, 18));
 		lblStarting.setHorizontalAlignment(SwingConstants.LEFT);
 		lblStarting.setBounds(10, 144, 261, 27);
 		frame.getContentPane().add(lblStarting);
 		
-		textStarting = new JTextField();
+		textStarting = new JTextField();// text field for user to enter starting currency number
 		textStarting.setBounds(287, 146, 290, 20);
 		frame.getContentPane().add(textStarting);
 		textStarting.setColumns(10);
 		
-		JLabel lblConversion = new JLabel("Enter conversion currency number: ");
+		JLabel lblConversion = new JLabel("Enter conversion currency number: "); //label to instruct the user to enter the converting currency number
 		lblConversion.setFont(new Font("Calibri", Font.PLAIN, 18));
 		lblConversion.setHorizontalAlignment(SwingConstants.LEFT);
 		lblConversion.setBounds(10, 249, 267, 27);
 		frame.getContentPane().add(lblConversion);
 		
-		textConversion = new JTextField();
+		textConversion = new JTextField(); //text field for the user to enter the converting currency number
 		textConversion.setBounds(287, 251, 290, 20);
 		frame.getContentPane().add(textConversion);
 		textConversion.setColumns(10);
 		
-		textConvertedAmt = new JTextField();
+		textConvertedAmt = new JTextField(); //text field to show the converted currency amt
 		textConvertedAmt.setHorizontalAlignment(SwingConstants.CENTER);
 		textConvertedAmt.setBackground(new Color(132, 132, 255));
 		textConvertedAmt.setBounds(158, 341, 270, 20);
 		frame.getContentPane().add(textConvertedAmt);
 		textConvertedAmt.setColumns(10);
 		
-		JLabel lblCurrencyNum;
+		JLabel lblCurrencyNum; //label to tell the user to input the starting currency amt
 		lblCurrencyNum = new JLabel("Enter starting currency amount:");
 		lblCurrencyNum.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCurrencyNum.setFont(new Font("Calibri", Font.PLAIN, 18));
 		lblCurrencyNum.setBounds(10, 197, 261, 27);
 		frame.getContentPane().add(lblCurrencyNum);
 		
-		textCurrencyNum = new JTextField();
+		textCurrencyNum = new JTextField(); //text field for the user to input the starting currency amt
 		textCurrencyNum.setHorizontalAlignment(SwingConstants.CENTER);
 		textCurrencyNum.setColumns(10);
 		textCurrencyNum.setBounds(287, 199, 290, 20);
@@ -115,8 +113,9 @@ public class GUIConversions {
 		JButton btnConvert = new JButton("Convert");
 		btnConvert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			double Amt = Amt;
-			textConvertedAmt.setText(Amt.ToString);
+			String inputAmount = textCurrencyNum.getText();//Gets the text (User Input) from the textCurrencyNum instance variable
+			double Amt = Double.parseDouble(inputAmount);//Creates the double Amt to hold the user input from earlier which is held in the textCurrencyNu, Instance variable
+			textConvertedAmt.setText(String.valueOf(Amt));//Changes the double Amt into a string (https://www.quora.com/What-is-the-use-of-the-String-ValueOf-function-in-Java)
 			}
 		});
 		btnConvert.setFont(new Font("Calibri", Font.BOLD, 18));
