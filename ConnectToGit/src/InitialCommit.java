@@ -58,6 +58,137 @@ public class InitialCommit {
 			System.out.println("*******************");
 			currency1.CAD();
 			System.out.println(currency1.toString()); // Grabs the information from the CAD constructor and prints it.
+			
+		}
+//*******************************************************************************************************************+-
+		else if (begin ==2 && choice ==1)
+		{
+			System.out.println("Euro to US Dollar");
+			System.out.println("*******************");
+		}
+		else if (begin==2 && choice ==3)
+		{
+			System.out.println("Euro to British Pound");
+			System.out.println("*******************");
+		}
+		else if (begin ==2 && choice ==4)
+		{
+			System.out.println("Euro to Japanese Yen");
+			System.out.println("*******************");
+		}
+		else if (begin==2 && choice==5)
+		{
+			System.out.println("Euro to Australian Dollar");
+			System.out.println("*******************");
+		}
+		else if (begin==2 && choice==6)
+		{
+			System.out.println("Euro to Canadian Dollar");
+			System.out.println("*******************");
+		}
+//***********************************************************************************************
+		else if (begin==3 && choice==1)
+		{
+			System.out.println("British Pound to US Dollar");
+			System.out.println("*******************");
+		}
+		else if (begin==3&&choice==2)
+		{
+			System.out.println("British Pound to Euro");
+			System.out.println("*******************");
+		}
+		else if (begin==3&&choice==4)
+		{
+			System.out.println("British Pound to Japanese Yen");
+			System.out.println("*******************");
+		}
+		else if (begin==3&&choice==5)
+		{
+			System.out.println("British Pound to Australian Dollar");
+			System.out.println("*******************");
+		}
+		else if (begin==3&&choice==6)
+		{
+			System.out.println("British Pound to Canadian Dollar");
+			System.out.println("*******************");
+		}
+//**************************************************************************************************
+		else if (begin==4&&choice==1)
+		{
+			System.out.println("Japanese Yen to US Dollar");
+			System.out.println("*******************");
+		}
+		else if (begin==4&&choice==2)
+		{
+			System.out.println("Japanese Yen to Euro");
+			System.out.println("*******************");
+		}
+		else if (begin==4&&choice==3)
+		{
+			System.out.println("Japanese Yen to British Pound");
+			System.out.println("*******************");
+		}
+		else if (begin==4&&choice==5)
+		{
+			System.out.println("Japanese Yen to Australian Dollar");
+			System.out.println("*******************");
+		}
+		else if (begin==4&&choice==6)
+		{
+			System.out.println("Japanese Yen to Canadian Dollar");
+			System.out.println("*******************");
+		}
+//*********************************************************************************************************
+		else if (begin==5&&choice==1)
+		{
+			System.out.println("Australian Dollar to US Dollar");
+			System.out.println("*******************");
+		}
+		else if (begin==5&&choice==2)
+		{
+			System.out.println("Australian Dollar to Euro");
+			System.out.println("*******************");
+		}
+		else if (begin==5&&choice==3)
+		{
+			System.out.println("Australian Dollar to British Pound");
+			System.out.println("*******************");
+		}
+		else if (begin==5&&choice==4)
+		{
+			System.out.println("Australian Dollar to Japanese Yen");
+			System.out.println("*******************");
+		}
+		else if (begin==5&&choice==6)
+		{
+			System.out.println("Australian Dollar to Candian Dollar");
+			System.out.println("*******************");
+		}
+//**********************************************************************************************************
+		else if (begin==6&&choice==1)
+		{
+			System.out.println("Candian Dollar to US Dollar");
+			System.out.println("*******************");
+		}
+		else if (begin==6&&choice==2)
+		{
+			System.out.println("Candian Dollar to Euro");
+			System.out.println("*******************");
+		}
+		else if (begin==6&&choice==3)
+		{
+			System.out.println("Candian Dollar to British Pound");
+			System.out.println("*******************");
+		}
+		else if (begin==6&&choice==4)
+		{
+			System.out.println("Candian Dollar to Japanese Yen");
+			System.out.println("*******************");
+		}
+		else if (begin==6&&choice==5)
+		{
+			System.out.println("Candian Dollar to Australian Dollar");
+			System.out.println("*******************");
 		}
 	System.out.println("Do you want to convert another currency (Y/N) ?"); //Repeat or not?
 		again = reader.next();
