@@ -1,10 +1,10 @@
- 
-public class usdConversions { //Conversions for the U.S Dollar
-	private double cadConversionRate = 1.36; //Amount of Canadian Dollars per U.S Dollar
-	private double gbpConversionRate = 0.76; //Amount of Pound per U.S Dollar
-	private double eurConversionRate = 0.91; //Amount of Euro per U.S Dollar
-	private double jpyConversionRate = 146.22; //Amount of Japanese Yen per U.S Dollar
-	private double audConversionRate = 1.46; //Amount of Australian Dollars per U.S Dollar
+
+public class audConversions {
+	private double cadConversionRate = 0.92; //Amount of Canadian Dollars per Australian Dollar
+	private double gbpConversionRate = 0.51; //Amount of Pound per Australian Dollar
+	private double eurConversionRate = 0.62; //Amount of Euro per Australian Dollar
+	private double jpyConversionRate = 100.71; //Amount of Japanese Yen per Australian Dollar
+	private double usdConversionRate = 0.66; //Amount of US Dollars per Australian Dollar
 	
 	private double currencyAmount; //instance variable for amount
 	private String currencySymbol; //instance variable that sets the type of currency for each conversion
@@ -18,48 +18,48 @@ public class usdConversions { //Conversions for the U.S Dollar
 	}
 	
 
-	public double CAD() //Constructor for converting USD into CAD //https://www.youtube.com/watch?v=h8EnX87gX9o&ab_channel=AJ looked up for constructor help
+	public double CAD() //Method for converting AUD into CAD 
 	{
 		currencyName="CAD"; // Abbreviation for the canadian dollar
 		currencySymbol ="C$"; //sets the currency symbol to the Canadian dollar symbol
-		convertedAmount = currencyAmount * cadConversionRate; //Converts the amount of usd to cad
+		convertedAmount = currencyAmount * cadConversionRate; //Converts the amount of aud to cad
 		return convertedAmount; // returns the converted amount
 	}
 	
-	public double GBP() //Constructor for converting USD into GBP
+	public double GBP() //Method for converting AUD into GBP
 	{
 		currencyName="GBP"; //abbreviation for British Pound Sterling
 		currencySymbol = "£"; //sets the currency symbol to the pound symbol
-		convertedAmount = currencyAmount * gbpConversionRate; //Converts the amount of usd to gbp
+		convertedAmount = currencyAmount * gbpConversionRate; //Converts the amount of aud to gbp
 		return convertedAmount; // returns the converted amount
 	}
 	
-	public double EUR() //Constructor for converting USD into EUR
+	public double EUR() //Method for converting AUD into EUR
 	{
 		currencyName = "EUR"; //abbreviation for Euro
 		currencySymbol = "€"; //sets the currency symbol to the euro symbol
-		convertedAmount = currencyAmount * eurConversionRate; //Converts the amount of usd to eur
+		convertedAmount = currencyAmount * eurConversionRate; //Converts the amount of aud to eur
 		return convertedAmount; // returns the converted amount
 		
 	}
 	
-	public double JPY() //Constructor for converting USD into JPY
+	public double JPY() //Method for converting AUD into JPY
 	{
 		currencyName = "JPY"; //abbreviation for Japanese Yen
 		currencySymbol = "¥"; //sets the currency symbol to the yen symbol
-		convertedAmount = currencyAmount * jpyConversionRate; //Converts the amount of usd to jpy
+		convertedAmount = currencyAmount * jpyConversionRate; //Converts the amount of aud to jpy
 		return convertedAmount; // returns the converted amount
 	}
 	
-	public double AUD() //Constructor for converting USD into AUD
+	public double USD() //Method for converting AUD into USD
 	{
-		currencyName = "AUD"; //abbreviation for Australian Dollar
-		currencySymbol = "A$";//sets the currency symbol to the Australian dollar symbol
-		convertedAmount = currencyAmount * audConversionRate; //Converts the amount of usd to aud
+		currencyName = "USD"; //abbreviation for Australian Dollar
+		currencySymbol = "$";//sets the currency symbol to the Australian dollar symbol
+		convertedAmount = currencyAmount * usdConversionRate; //Converts the amount of aud to usd
 		return convertedAmount; // returns the converted amount
 	}
 	
-	public String toString() //https://stackoverflow.com/questions/6431933/how-to-format-strings-in-java, //https://www.geeksforgeeks.org/java-string-format-method-with-examples/
+	public String toString()
 	{
 		String conversionFormat = String.format("Converted Amount: %s %.2f %s", currencySymbol, convertedAmount, currencyName); //formats the objects for printing.
 		return conversionFormat; //returns the conversionFormat variable to the output for toString in the main
