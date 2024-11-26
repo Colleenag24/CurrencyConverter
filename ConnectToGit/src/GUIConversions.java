@@ -162,7 +162,6 @@ public class GUIConversions {
 					textConvertedAmt.setText(convertedResult);
 					
 					Class.forName("com.mysql.cj.jdbc.Driver"); //loads the jdbc driver class
-					
 					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3307/mysql", "root","");
 					String sql = "SELECT * FROM Currency";
 					PreparedStatement statement = con.prepareStatement(sql);
