@@ -1,5 +1,11 @@
 import java.awt.EventQueue;
 import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 import javax.swing.JFrame;
@@ -53,15 +59,19 @@ public class GUIConversions {
 	/**
 	 * Create the application.
 	 * @return 
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public GUIConversions() {
+	public GUIConversions() throws ClassNotFoundException, SQLException {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws ClassNotFoundException 
+	 * @throws SQLException 
 	 */
-	private void initialize() {
+	private void initialize() throws ClassNotFoundException, SQLException {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(132, 132, 255)); //Background and layout
 		frame.setBounds(100, 100, 597, 433);
@@ -129,20 +139,61 @@ public class GUIConversions {
 		textCurrencyNum.setBounds(286, 252, 291, 20);
 		frame.getContentPane().add(textCurrencyNum);
 		
+		Class.forName("com.mysql.cj.jdbc.Driver"); //loads the jdbc driver class
+		
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3307/mysql", "root","");
+		Statement stmt=null;
+		String sql;
+		stmt = con.createStatement();
+		sql="CREATE TABLE Currency (userCurrency INTEGER not null, convertCurrency INTEGER not null, convertedResult DOUBLE, PRIMARY KEY (convertedResult))";
+
+		stmt.executeUpdate(sql);
+		
 		JButton btnConvert = new JButton("Convert"); //Button the user clicks to convert their chosen currency
 		btnConvert.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				try {
+					
 					int userCurrency=Integer.parseInt(textStarting.getText()); //Gets the text of the number that the user selects for their starting currency
 					int convertCurrency=Integer.parseInt(textConversion.getText()); //Gets the text of the number the user  would like to convert to
 					double amount1=Double.parseDouble(textCurrencyNum.getText()); //Gets the text and makes the double amount1 the user input
 					String convertedResult=convertCurrency(userCurrency, convertCurrency, amount1); //Variable for holding the converted result. Calls convert method
 					textConvertedAmt.setText(convertedResult);
-					conversionHistory.add(convertedResult); //Adds each conversion result to the conversionHistory ArrayList
-					writeToFile(); //calls the writeToFile method to store the previous conversions
+					
+					Class.forName("com.mysql.cj.jdbc.Driver"); //loads the jdbc driver class
+					
+					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3307/mysql", "root","");
+					String sql = "SELECT * FROM Currency";
+					PreparedStatement statement = con.prepareStatement(sql);
+					ResultSet result=statement.executeQuery();
+					StringBuilder display=new StringBuilder();
+					while(result.next())
+					{
+					int userCurrency1=Integer.parseInt(textStarting.getText()); //Gets the text of the number that the user selects for their starting currency
+					int convertCurrency1=Integer.parseInt(textConversion.getText()); //Gets the text of the number the user  would like to convert to
+					double amount11=Double.parseDouble(textCurrencyNum.getText()); //Gets the text and makes the double amount1 the user input
+					String convertedResult1=convertCurrency(userCurrency1, convertCurrency1, amount11); //Variable for holding the converted result. Calls convert method
+
+					display.append("Author ID: ").append(userCurrency).append("\n");
+					display.append("First Name: ").append(convertCurrency1).append("\n");
+					display.append("Last Name: ").append(convertedResult1).append("\n\n");
+					}
+					textConvertedAmt.setText(display.toString());
+
+					
+
+
+//conversionHistory.add(convertedResult); //Adds each conversion result to the conversionHistory ArrayList					
+//writeToFile(); //calls the writeToFile method to store the previous conversions
 				} catch (NumberFormatException ex) { //If the user does not put in a number, it will print Invalid input
 	            System.out.println("Invalid input. Please enter a number for conversions.");
-			} catch (IOException e1) { // Eclipse auto generated catch to handle any errors from the user not putting in a valid number
+
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
