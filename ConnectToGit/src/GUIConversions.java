@@ -56,7 +56,7 @@ public class GUIConversions {
 	/**
 	 * Create the application.
 	 * @return 
-	 */
+	 */ 
 	public GUIConversions() {
 		initialize();
 	}
