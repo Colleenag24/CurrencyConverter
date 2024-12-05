@@ -1,11 +1,5 @@
 import java.awt.EventQueue;
 import java.io.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.*;
 
 import javax.swing.JFrame;
@@ -18,6 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 
 public class GUIConversions {
 
@@ -37,6 +33,7 @@ public class GUIConversions {
 	private jpyConversions currency4= new jpyConversions(); //Calling the jpyConversions class to work the conversions with the GUI
 	private audConversions currency5= new audConversions(); //Calling the audConversions class to work the conversions with the GUI
 	private cadConversions currency6= new cadConversions(); //Calling the cadConversions class to work the conversions with the GUI
+	private Action action = new SwingAction();
 	
 
 
@@ -59,20 +56,17 @@ public class GUIConversions {
 	/**
 	 * Create the application.
 	 * @return 
-	 * @throws SQLException 
-	 * @throws ClassNotFoundException 
 	 */
-	public GUIConversions() throws ClassNotFoundException, SQLException {
+	public GUIConversions() {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
-	 * @throws ClassNotFoundException 
-	 * @throws SQLException 
 	 */
-	private void initialize() throws ClassNotFoundException, SQLException {
+	private void initialize() {
 		frame = new JFrame();
+		frame.setTitle("Currency Converter");
 		frame.getContentPane().setBackground(new Color(132, 132, 255)); //Background and layout
 		frame.setBounds(100, 100, 597, 433);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -137,65 +131,44 @@ public class GUIConversions {
 		textCurrencyNum.setHorizontalAlignment(SwingConstants.CENTER);
 		textCurrencyNum.setColumns(10);
 		textCurrencyNum.setBounds(286, 252, 291, 20);
-		frame.getContentPane().add(textCurrencyNum);
-		
-		Class.forName("com.mysql.cj.jdbc.Driver"); //loads the jdbc driver class
-		
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3307/mysql", "root","");
-		Statement stmt=null;
-		String sql;
-		stmt = con.createStatement();
-		sql="CREATE TABLE Currency (userCurrency INTEGER not null, convertCurrency INTEGER not null, convertedResult DOUBLE, PRIMARY KEY (convertedResult))";
-
-		stmt.executeUpdate(sql);
 		
 		JButton btnConvert = new JButton("Convert"); //Button the user clicks to convert their chosen currency
 		btnConvert.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				try {
-					
 					int userCurrency=Integer.parseInt(textStarting.getText()); //Gets the text of the number that the user selects for their starting currency
 					int convertCurrency=Integer.parseInt(textConversion.getText()); //Gets the text of the number the user  would like to convert to
 					double amount1=Double.parseDouble(textCurrencyNum.getText()); //Gets the text and makes the double amount1 the user input
 					String convertedResult=convertCurrency(userCurrency, convertCurrency, amount1); //Variable for holding the converted result. Calls convert method
 					textConvertedAmt.setText(convertedResult);
-					
-
-					PreparedStatement statement = con.prepareStatement(sql);
-					ResultSet result=statement.executeQuery();
-					StringBuilder display=new StringBuilder();
-					while(result.next())
-					{
-					int userCurrency1=Integer.parseInt(textStarting.getText()); //Gets the text of the number that the user selects for their starting currency
-					int convertCurrency1=Integer.parseInt(textConversion.getText()); //Gets the text of the number the user  would like to convert to
-					double amount11=Double.parseDouble(textCurrencyNum.getText()); //Gets the text and makes the double amount1 the user input
-					String convertedResult1=convertCurrency(userCurrency1, convertCurrency1, amount11); //Variable for holding the converted result. Calls convert method
-
-					display.append("Author ID: ").append(userCurrency).append("\n");
-					display.append("First Name: ").append(convertCurrency1).append("\n");
-					display.append("Last Name: ").append(convertedResult1).append("\n\n");
-					}
-					textConvertedAmt.setText(display.toString());
-
-					
-
-
-//conversionHistory.add(convertedResult); //Adds each conversion result to the conversionHistory ArrayList					
-//writeToFile(); //calls the writeToFile method to store the previous conversions
+					conversionHistory.add(convertedResult); //Adds each conversion result to the conversionHistory ArrayList
+					writeToFile(); //calls the writeToFile method to store the previous conversions and clear the text fields
 				} catch (NumberFormatException ex) { //If the user does not put in a number, it will print Invalid input
 	            System.out.println("Invalid input. Please enter a number for conversions.");
-
-
-				} catch (SQLException e1) {
+			} catch (IOException e1) { // Eclipse auto generated catch to handle any errors from the user not putting in a valid number
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 		}
 	});
+		frame.getContentPane().add(textCurrencyNum);
 		btnConvert.setFont(new Font("Calibri", Font.BOLD, 18));
-		btnConvert.setBounds(235, 307, 120, 23);
+		btnConvert.setBounds(172, 308, 120, 23);
 		frame.getContentPane().add(btnConvert);
+		
+		JButton btnReset = new JButton("Reset");
+		btnReset.setAction(action);
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textConvertedAmt.setText("");
+				textStarting.setText("");
+				textCurrencyNum.setText("");
+				textConversion.setText("");
+			}
+		});
+		btnReset.setFont(new Font("Calibri", Font.BOLD, 18));
+		btnReset.setBounds(304, 307, 107, 24);
+		frame.getContentPane().add(btnReset);
 		
 
 	}
@@ -400,10 +373,14 @@ public class GUIConversions {
 		{
 			
 		}
+		
 	}
-	
-		//Links used for help: 
-		// 1. https://stackoverflow.com/questions/7974154/how-do-i-print-messages-to-the-screen-in-my-java-gui
-		// 2. https://sentry.io/answers/how-to-create-a-file-and-write-to-it-in-java/#:~:text=java%20file.,file%20will%20not%20be%20overwritten.
-		// 3. https://www.geeksforgeeks.org/exceptions-in-java/
+	private class SwingAction extends AbstractAction {
+		public SwingAction() {
+			putValue(NAME, "Reset");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
 }
