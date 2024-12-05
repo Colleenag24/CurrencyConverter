@@ -161,9 +161,7 @@ public class GUIConversions {
 					String convertedResult=convertCurrency(userCurrency, convertCurrency, amount1); //Variable for holding the converted result. Calls convert method
 					textConvertedAmt.setText(convertedResult);
 					
-					Class.forName("com.mysql.cj.jdbc.Driver"); //loads the jdbc driver class
-					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3307/mysql", "root","");
-					String sql = "SELECT * FROM Currency";
+
 					PreparedStatement statement = con.prepareStatement(sql);
 					ResultSet result=statement.executeQuery();
 					StringBuilder display=new StringBuilder();
@@ -190,9 +188,6 @@ public class GUIConversions {
 
 
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
