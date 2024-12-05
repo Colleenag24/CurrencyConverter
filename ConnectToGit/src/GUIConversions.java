@@ -192,7 +192,7 @@ public class GUIConversions {
 					e1.printStackTrace();
 				}
 		}
-	}); 
+	});
 		btnConvert.setFont(new Font("Calibri", Font.BOLD, 18));
 		btnConvert.setBounds(235, 307, 120, 23);
 		frame.getContentPane().add(btnConvert);
