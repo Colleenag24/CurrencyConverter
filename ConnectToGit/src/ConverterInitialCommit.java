@@ -1,11 +1,12 @@
 
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.Scanner;
 
 public class ConverterInitialCommit {
 
-	public static void main(String[] args) throws FileNotFoundException { 
+	public static void main(String[] args) throws FileNotFoundException, ClassNotFoundException, SQLException { 
 		// TODO Auto-generated method stub
 		usdConversions currency1= new usdConversions(); //Connects the usdConversions class to the main 
 		eurConversions currency2= new eurConversions(); //Connects the eurConversions class to the main
