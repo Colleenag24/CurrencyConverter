@@ -1,5 +1,10 @@
 import java.awt.EventQueue;
 import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.*;
 
 import javax.swing.JFrame;
@@ -21,7 +26,7 @@ public class GUIConversions {
 	private JTextField textStarting; //Starting Value that the user inputs to select which currency they are starting with
 	private JTextField textConversion; //Selection of currency the user would like to convert to
 	private JTextField textConvertedAmt; //The converted amount after converting to the user's chosen currency
-	private JTextField textCurrencyNum;  //Starting amount that the user would like to convert
+	private JTextField textCurrencyNum; //Starting amount that the user would like to convert
 	
 	
 	public static ArrayList<String> conversionHistory= new ArrayList<>(); //ArrayList to hold the conversions and write them to a file
@@ -34,6 +39,7 @@ public class GUIConversions {
 	private audConversions currency5= new audConversions(); //Calling the audConversions class to work the conversions with the GUI
 	private cadConversions currency6= new cadConversions(); //Calling the cadConversions class to work the conversions with the GUI
 	private Action action = new SwingAction();
+	DecimalFormat formatter = new DecimalFormat("#,###.00");
 	
 
 
@@ -56,7 +62,7 @@ public class GUIConversions {
 	/**
 	 * Create the application.
 	 * @return 
-	 */ 
+	 */
 	public GUIConversions() {
 		initialize();
 	}
@@ -143,12 +149,19 @@ public class GUIConversions {
 					textConvertedAmt.setText(convertedResult);
 					conversionHistory.add(convertedResult); //Adds each conversion result to the conversionHistory ArrayList
 					writeToFile(); //calls the writeToFile method to store the previous conversions and clear the text fields
+					insertConversion();
 				} catch (NumberFormatException ex) { //If the user does not put in a number, it will print Invalid input
 	            System.out.println("Invalid input. Please enter a number for conversions.");
 			} catch (IOException e1) { // Eclipse auto generated catch to handle any errors from the user not putting in a valid number
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
+				} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	});
 		frame.getContentPane().add(textCurrencyNum);
@@ -370,12 +383,34 @@ public class GUIConversions {
 			writer.write(conversion + "\n"); //Writes the conversions into the text file
 		}
 		writer.close(); //closes the writer
-		{
+		
+			
+		}
+		
+		public void insertConversion() throws IOException, SQLException, ClassNotFoundException {
+			Class.forName("com.mysql.cj.jdbc.Driver"); //database connection
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3307/mysql","root",""); //database connection
+			
+			String conv=textConvertedAmt.getText(); //String to make sure database output works
+			
+			 String sql = "INSERT INTO currencyConverter (Conversion) VALUES (?)";  //insert into database
+			 System.out.println(conv);  //print to make sure it works
+			
+
+              PreparedStatement statement = con.prepareStatement(sql);
+
+              statement.setString(1, conv);
+              
+              statement.executeUpdate();
 			
 		}
 		
 	}
-	private class SwingAction extends AbstractAction {
+	class SwingAction extends AbstractAction {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		public SwingAction() {
 			putValue(NAME, "Reset");
 			putValue(SHORT_DESCRIPTION, "Some short description");
@@ -383,4 +418,3 @@ public class GUIConversions {
 		public void actionPerformed(ActionEvent e) {
 		}
 	}
-}
